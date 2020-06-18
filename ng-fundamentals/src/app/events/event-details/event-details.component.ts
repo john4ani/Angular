@@ -24,15 +24,11 @@ export class EventDetailsComponent {
     }
 
     ngOnInit(){
-        //fix to navigate to route from the same page
-        //resets props on id param change
-        this.route.params.forEach((params: Params) =>{
-            this.event = this.eventService.getEvent(+params['id']);
-            this.addMode = false;
-        })
-
-        //this.event = this.eventService.getEvent(
-           // +this.route.snapshot.params['id'])
+        
+        this.route.data.forEach((data) =>{
+                this.event = data['event'];
+                this.addMode = false;
+            });            
     }
 
     addSession(){
@@ -44,7 +40,7 @@ export class EventDetailsComponent {
         const nextId = Math.max.apply(null,this.event.sessions.map(s => s.id))
         session.id = nextId +1
         this.event.sessions.push(session)
-        this.eventService.updateEvent(this.event)
+        this.eventService.saveEvent(this.event).subscribe()
         this.addMode = false
     }
 

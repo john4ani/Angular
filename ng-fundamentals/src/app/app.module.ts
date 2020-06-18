@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import {
   EventsListComponent,
@@ -8,7 +9,7 @@ import {
   EventService,
   EventDetailsComponent,
   CreateEventComponent,
-  EventRouteActivator,
+  EventResolver,
   EventListResolver,
   CreateSessionComponent,
   SessionListComponent,
@@ -42,7 +43,8 @@ let jQuery:Toastr = window['$'];
     BrowserModule, 
     FormsModule, 
     ReactiveFormsModule,  
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],  
   declarations: [
     EventsAppComponent,
@@ -65,7 +67,7 @@ let jQuery:Toastr = window['$'];
     EventService, 
     { provide: TOASTR_TOKEN, useValue: toastr }, 
     { provide: JQ_TOKEN, useValue: jQuery }, 
-    EventRouteActivator, 
+    EventResolver, 
     //or.. { provide: EventRouteActivator, useClass: EventRouteActivator },
     EventListResolver,
     VoterService,
